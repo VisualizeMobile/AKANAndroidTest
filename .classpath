@@ -11,5 +11,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/AKANAndroidTest/Robotium-5.3.1/robotium-solo-5.3.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="Robotium-5.3.1/robotium-solo-5.3.1-javadoc.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
