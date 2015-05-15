@@ -1,17 +1,25 @@
 package br.com.visualize.akan.unitest.models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Assert;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.domain.model.Congressman;
+import br.com.visualize.akan.domain.model.Quota;
 
 
 public class CongressmanTest extends AndroidTestCase {
 	private Congressman validCongressman = null;
 	private Congressman nullCongressman = null;
+	private List<Quota> validQuotas = null;
+	private Quota validQuota = null;
 	
 	public void setUp() {
 		this.validCongressman = new Congressman();
+		this.validQuota = new Quota();
+		this.validQuotas = new ArrayList<Quota>();
 	}
 	
 	public void testValidInstantiationCongressman() {
@@ -85,6 +93,34 @@ public class CongressmanTest extends AndroidTestCase {
 		
 		String result = this.validCongressman.getUfCongressman();
 		String expectedResult = "tested UF";
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testQuotasCongressman() {
+		validQuotas.add( validQuota );
+		this.validCongressman.setQuotasCongressman( validQuotas );
+		
+		List<Quota> result = this.validCongressman.getQuotasCongressman();
+		List<Quota> expectedResult = validQuotas;
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testTotalSpentCongressman() {
+		this.validCongressman.setTotalSpentCongressman( 1000.00 );
+		
+		double result = this.validCongressman.getTotalSpentCongressman();
+		double expectedResult = 1000.00;
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testRankingCongressman() {
+		this.validCongressman.setRankingCongressman( 100 );
+		
+		int result = this.validCongressman.getRankingCongressman();
+		int expectedResult = 100;
 		
 		Assert.assertEquals( expectedResult, result );
 	}
