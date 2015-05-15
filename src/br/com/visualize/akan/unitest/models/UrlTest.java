@@ -57,4 +57,13 @@ public class UrlTest extends AndroidTestCase {
 				
 		Assert.assertEquals( expectedResult, result );
 	}
+	
+	public void testSecondAlternativeUrl() {
+		this.validUrl.setSecondAlternativeUrl( "url test" );
+		
+		String result = this.validUrl.getSecondAlternativeUrl();
+		String expectedResult = "url test";
+				
+		Assert.assertEquals( expectedResult, result );
+	}
 }
