@@ -61,4 +61,31 @@ public class CongressmanTest extends AndroidTestCase {
 		
 		Assert.assertEquals( expectedResult, result );
 	}
+	
+	public void testNameCongressman() {
+		this.validCongressman.setNameCongressman( "tested congressman" );
+		
+		String result = this.validCongressman.getNameCongressman();
+		String expectedResult = "tested congressman";
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testPartyCongressman() {
+		this.validCongressman.setPartyCongressman( "tested party" );
+		
+		String result = this.validCongressman.getPartyCongressman();
+		String expectedResult = "tested party";
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testUfCongressman() {
+		this.validCongressman.setUfCongressman( "tested UF" );
+		
+		String result = this.validCongressman.getUfCongressman();
+		String expectedResult = "tested UF";
+		
+		Assert.assertEquals( expectedResult, result );
+	}
 }
