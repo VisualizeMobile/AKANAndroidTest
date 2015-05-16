@@ -64,4 +64,22 @@ public class StatisticTest extends AndroidTestCase {
 		
 		Assert.assertEquals( expectedResult, result );
 	}
+	
+	public void testAverage() {
+		this.validStatistic.setAverage( 20.05 );
+		
+		double result = this.validStatistic.getAverage();
+		double expectedResult = 20.05;
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testMaxValue() {
+		this.validStatistic.setMaxValue( 25000.05 );
+		
+		double result = this.validStatistic.getMaxValue();
+		double expectedResult = 25000.05;
+		
+		Assert.assertEquals( expectedResult, result );
+	}
 }
