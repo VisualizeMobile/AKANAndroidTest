@@ -23,6 +23,8 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	private Congressman validCongressmanB = null;
 	private Congressman validCongressmanC = null;
 	
+	private Congressman nullCongressman = null;
+	
 	protected void setUp() {
 		this.context = getContext();
 		
@@ -46,13 +48,48 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	public void testLocalDatabaseIsNotEmpty() {
-		Assert.assertFalse( validCongressmanDao.checkEmptyLocalDb() );
+		boolean result = validCongressmanDao.checkEmptyLocalDb();
+		
+		Assert.assertFalse( result );
 	}
 	
 	public void testLocalDatabaseIsEmpty() {
 		deleteValidEntitiesLocalDatabase();
 		
-		Assert.assertTrue( validCongressmanDao.checkEmptyLocalDb() );
+		boolean result = validCongressmanDao.checkEmptyLocalDb();
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testInsertAllValidCongressman() {
+		List<Congressman> congressmanList = new ArrayList<Congressman>();
+		
+		congressmanList.add( validCongressmanA );
+		congressmanList.add( validCongressmanB );
+		congressmanList.add( validCongressmanC );
+		
+		boolean result = 
+				validCongressmanDao.insertAllCongressman( congressmanList );
+		
+		Assert.assertTrue( result );
+	}
+	
+	/*
+	 * This test found an error in method insertCongressman()!
+	 * 
+	 * TODO: create a issue in GitHub about this.
+	 */
+	public void testInsertAllNullCongressman() {
+		List<Congressman> congressmanList = new ArrayList<Congressman>();
+		
+		congressmanList.add( nullCongressman );
+		congressmanList.add( nullCongressman );
+		congressmanList.add( nullCongressman );
+		
+		boolean result = 
+				validCongressmanDao.insertAllCongressman( congressmanList );
+		
+		Assert.assertFalse( result );
 	}
 	
 	private void instantiateValidEntitiesToTest() {
