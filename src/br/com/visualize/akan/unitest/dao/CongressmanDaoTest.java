@@ -74,11 +74,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		Assert.assertTrue( result );
 	}
 	
-	/*
-	 * This test found an error in method insertCongressman()!
-	 * 
-	 * TODO: create a issue in GitHub about this.
-	 */
 	public void testInsertAllNullCongressman() {
 		List<Congressman> congressmanList = new ArrayList<Congressman>();
 		
@@ -88,6 +83,34 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		
 		boolean result = 
 				validCongressmanDao.insertAllCongressman( congressmanList );
+		
+		Assert.assertFalse( result );
+	}
+	
+	public void testDeleteAllCongressman() {
+		boolean result = false;
+		
+        try {
+	        result = validCongressmanDao.deleteAllCongressman();
+
+        } catch( NullCongressmanException e ) {
+	        e.printStackTrace();
+        }
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testDeleteAllCongressmanWithEmptyDatabase() {
+		deleteValidEntitiesLocalDatabase();
+		
+		boolean result = true;
+		
+		try {
+			result = validCongressmanDao.deleteAllCongressman();
+			
+		} catch( NullCongressmanException e ) {
+	        e.printStackTrace();
+        }
 		
 		Assert.assertFalse( result );
 	}
