@@ -148,7 +148,19 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 
 	public void testNullCongressmanIsFollowed() {
-		/*! Write Test Here. */
+		boolean result = NOT_FOLLOWED;
+		
+		nullCongressman.setStatusCogressman( FOLLOWED );
+		
+		try {
+	        result = validCongressmanDao.
+	        		setFollowedCongressman( nullCongressman );
+	        
+        } catch( NullCongressmanException e ) {
+	        e.printStackTrace();
+        }
+		
+		Assert.assertTrue( result );
 	}
 	
 	private void instantiateValidEntitiesToTest() {
