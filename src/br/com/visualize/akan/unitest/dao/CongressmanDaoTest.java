@@ -7,6 +7,7 @@ import java.util.List;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
@@ -150,8 +151,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	public void testNullCongressmanIsFollowed() {
 		boolean result = NOT_FOLLOWED;
 		
-		nullCongressman.setStatusCogressman( FOLLOWED );
-		
 		try {
 	        result = validCongressmanDao.
 	        		setFollowedCongressman( nullCongressman );
@@ -160,7 +159,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	        e.printStackTrace();
         }
 		
-		Assert.assertTrue( result );
+		Assert.assertFalse( result );
 	}
 	
 	private void instantiateValidEntitiesToTest() {
@@ -172,6 +171,25 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		setValidCongressmanA();
 		setValidCongressmanB();
 		setValidCongressmanC();
+	}
+	
+	private void insertValidEntitiesInLocalDatabase() {
+		List<Congressman> congressmanList = new ArrayList<Congressman>();
+		
+		congressmanList.add( validCongressmanA );
+		congressmanList.add( validCongressmanB );
+		congressmanList.add( validCongressmanC );
+		
+		validCongressmanDao.insertAllCongressman( congressmanList );
+	}
+	
+	private void deleteValidEntitiesLocalDatabase() {
+		try {
+	        validCongressmanDao.deleteAllCongressman();
+	        
+        } catch( NullCongressmanException e ) {
+	        e.printStackTrace();
+        }
 	}
 	
 	private void setValidCongressmanA() {
@@ -208,24 +226,5 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		this.validCongressmanC.setTotalSpentCongressman( 25000.00 );
 		this.validCongressmanC.setTypeCongressman( "Deputy" );
 		this.validCongressmanC.setUfCongressman( "valid UF B" );
-	}
-	
-	private void insertValidEntitiesInLocalDatabase() {
-		List<Congressman> congressmanList = new ArrayList<Congressman>();
-		
-		congressmanList.add( validCongressmanA );
-		congressmanList.add( validCongressmanB );
-		congressmanList.add( validCongressmanC );
-		
-		validCongressmanDao.insertAllCongressman( congressmanList );
-	}
-	
-	private void deleteValidEntitiesLocalDatabase() {
-		try {
-	        validCongressmanDao.deleteAllCongressman();
-	        
-        } catch( NullCongressmanException e ) {
-	        e.printStackTrace();
-        }
 	}
 }
