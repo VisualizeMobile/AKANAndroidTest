@@ -2,6 +2,8 @@ package br.com.visualize.akan.unitest.dao;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -182,15 +184,55 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	public void testListAllCongressmenWithoutForgettingAnyone() {
-		/*! Write Test Here. */
-	}
-	
-	public void testListAllCongressmenWhenOneCongressmanIsNull() {
-		/*! Write Test Here. */
+		List<Congressman> congressmanList = new ArrayList<Congressman>();
+		congressmanList = validCongressmanDao.getAll();
+		
+		int expectedResult = 3;
+		int result = congressmanList.size();
+		
+		Assert.assertEquals( expectedResult, result );
 	}
 	
 	public void testSelectCongressmanByName() {
-		/*! Write Test Here. */
+		List<Congressman> congressmanList = 
+				validCongressmanDao.selectCongressmanByName( "valid name A" );
+		
+		List<Congressman> expectedList = new ArrayList<Congressman>();
+		expectedList.add( validCongressmanA );
+		
+		Collections.sort( congressmanList, new Comparator<Congressman>() {
+			public int compare( Congressman c1, Congressman c2 ) {
+				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
+			}
+		});
+		
+		Collections.sort( expectedList, new Comparator<Congressman>() {
+			public int compare( Congressman c1, Congressman c2 ) {
+				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
+			}
+		});
+		
+		int sizeCongressmanList = congressmanList.size();
+		int sizeExpectedList = expectedList.size();
+		
+		boolean result = false;
+		
+		if( sizeCongressmanList == sizeExpectedList ) {
+			for( int index = 0; index < sizeCongressmanList; index++ ) {
+				String nameCongressman = congressmanList.get( 0 ).getNameCongressman();
+				String expectedName = expectedList.get( 0 ).getNameCongressman();
+				
+				if( nameCongressman.equals( expectedName ) ) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		} else {
+			result = false;
+		}
+		
+		Assert.assertTrue( result );
 	}
 	
 	public void testSelectCongressmanThatNotExist() {
