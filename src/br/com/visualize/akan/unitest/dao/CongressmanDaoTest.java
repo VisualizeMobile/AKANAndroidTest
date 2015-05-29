@@ -7,7 +7,6 @@ import java.util.List;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
-import android.util.Log;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
@@ -160,6 +159,50 @@ public class CongressmanDaoTest extends AndroidTestCase {
         }
 		
 		Assert.assertFalse( result );
+	}
+	
+	public void testListAllCongressmen() {
+		List<Congressman> result = new ArrayList<Congressman>();
+		result = validCongressmanDao.getAll();
+		
+		List<Congressman> expectedResult = new ArrayList<Congressman>();
+		
+		Assert.assertEquals( expectedResult.getClass(), result.getClass() );
+	}
+	
+	public void testListAllCongressmenWithEmptyDatabase() {
+		deleteValidEntitiesLocalDatabase();
+		
+		List<Congressman> result = new ArrayList<Congressman>();
+		result = validCongressmanDao.getAll();
+		
+		List<Congressman> expectedResult = new ArrayList<Congressman>();
+		
+		Assert.assertEquals( expectedResult, result );
+	}
+	
+	public void testListAllCongressmenWithoutForgettingAnyone() {
+		/*! Write Test Here. */
+	}
+	
+	public void testListAllCongressmenWhenOneCongressmanIsNull() {
+		/*! Write Test Here. */
+	}
+	
+	public void testSelectCongressmanByName() {
+		/*! Write Test Here. */
+	}
+	
+	public void testSelectCongressmanThatNotExist() {
+		/*! Write Test Here. */
+	}
+	
+	public void testSearchCongressmanBynameWithEmptyDatabase() {
+		/*! Write Test Here. */
+	}
+	
+	public void testSearchNullCongressmanByName() {
+		/*! Write Test Here. */
 	}
 	
 	private void instantiateValidEntitiesToTest() {
