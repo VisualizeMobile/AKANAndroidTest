@@ -18,7 +18,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	static final boolean FOLLOWED = true;
 	static final boolean NOT_FOLLOWED = false;
 	
-	private Context context = null;;
+	private Context context = null;
 	private CongressmanDao validCongressmanDao = null;
 	
 	private Congressman validCongressmanA = null;
@@ -207,6 +207,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		Assert.assertTrue( result );
 	}
 	
+	/* TODO: Need raise a exception. */
 	/* TODO: Create a issue, because this identify a error. */
 	public void testSelectCongressmanThatNotExist() {
 		List<Congressman> congressmanList = 
@@ -221,12 +222,28 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		Assert.assertFalse( result );
 	}
 	
-	public void testSearchCongressmanBynameWithEmptyDatabase() {
-		/*! Write Test Here. */
+	/* TODO: Need raise a exception. */
+	/* TODO: Create a issue, because this identify a error. */
+	public void testSearchCongressmanByNameWithEmptyDatabase() {
+		deleteValidEntitiesLocalDatabase();
+		
+		List<Congressman> congressmanList = 
+				validCongressmanDao.selectCongressmanByName( "valid name A" );
+		
+		List<Congressman> expectedList = new ArrayList<Congressman>();
+		
+		Assert.assertEquals( expectedList, congressmanList );
 	}
 	
-	public void testSearchNullCongressmanByName() {
-		/*! Write Test Here. */
+	/* TODO: Need raise a exception. */
+	/* TODO: Create a issue, because this identify a error. */
+	public void testSearchCongressmanWithoutName() {
+		List<Congressman> congressmanList = 
+				validCongressmanDao.selectCongressmanByName( "" );
+		
+		List<Congressman> expectedList = new ArrayList<Congressman>();
+		
+		Assert.assertEquals( expectedList, congressmanList );
 	}
 	
 	private void instantiateValidEntitiesToTest() {
@@ -300,25 +317,27 @@ public class CongressmanDaoTest extends AndroidTestCase {
 
 		boolean result = false;
 		
-	    Collections.sort( congressmanList, new Comparator<Congressman>() {
-			public int compare( Congressman c1, Congressman c2 ) {
-				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
-			}
-		});
+	    sortListCongressman( congressmanList );
+		sortListCongressman( expectedList );
 		
-		Collections.sort( expectedList, new Comparator<Congressman>() {
-			public int compare( Congressman c1, Congressman c2 ) {
-				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
-			}
-		});
+		result = isListCongressmanEquals( congressmanList, expectedList );
+
+	    return result;
+    }
+
+	private boolean isListCongressmanEquals( List<Congressman> congressmanList,
+            List<Congressman> expectedList ) {
+		boolean result = false;
 		
-		int sizeCongressmanList = congressmanList.size();
+	    int sizeCongressmanList = congressmanList.size();
 		int sizeExpectedList = expectedList.size();
 		
 		if( sizeCongressmanList == sizeExpectedList ) {
 			for( int index = 0; index < sizeCongressmanList; index++ ) {
-				String nameCongressman = congressmanList.get( 0 ).getNameCongressman();
-				String expectedName = expectedList.get( 0 ).getNameCongressman();
+				String nameCongressman = congressmanList.get( 0 ).
+						getNameCongressman();
+				String expectedName = expectedList.get( 0 ).
+						getNameCongressman();
 				
 				if( nameCongressman.equals( expectedName ) ) {
 					result = true;
@@ -329,7 +348,16 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		} else {
 			result = false;
 		}
-
+		
 	    return result;
+    }
+
+	private void sortListCongressman( List<Congressman> congressmanList ) {
+	    Collections.sort( congressmanList, new Comparator<Congressman>() {
+			public int compare( Congressman c1, Congressman c2 ) {
+				return c2.getNameCongressman().
+						compareTo( c1.getNameCongressman() );
+			}
+		});
     }
 }
