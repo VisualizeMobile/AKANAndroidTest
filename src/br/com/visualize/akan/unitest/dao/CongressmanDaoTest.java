@@ -193,6 +193,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		Assert.assertEquals( expectedResult, result );
 	}
 	
+	/* TODO: Create a issue, because this identify a error. */
 	public void testSelectCongressmanByName() {
 		List<Congressman> congressmanList = 
 				validCongressmanDao.selectCongressmanByName( "valid name A" );
@@ -200,43 +201,24 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		List<Congressman> expectedList = new ArrayList<Congressman>();
 		expectedList.add( validCongressmanA );
 		
-		Collections.sort( congressmanList, new Comparator<Congressman>() {
-			public int compare( Congressman c1, Congressman c2 ) {
-				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
-			}
-		});
-		
-		Collections.sort( expectedList, new Comparator<Congressman>() {
-			public int compare( Congressman c1, Congressman c2 ) {
-				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
-			}
-		});
-		
-		int sizeCongressmanList = congressmanList.size();
-		int sizeExpectedList = expectedList.size();
-		
-		boolean result = false;
-		
-		if( sizeCongressmanList == sizeExpectedList ) {
-			for( int index = 0; index < sizeCongressmanList; index++ ) {
-				String nameCongressman = congressmanList.get( 0 ).getNameCongressman();
-				String expectedName = expectedList.get( 0 ).getNameCongressman();
-				
-				if( nameCongressman.equals( expectedName ) ) {
-					result = true;
-				} else {
-					result = false;
-				}
-			}
-		} else {
-			result = false;
-		}
+		boolean result = compareListCongressman( congressmanList, 
+				expectedList );
 		
 		Assert.assertTrue( result );
 	}
 	
+	/* TODO: Create a issue, because this identify a error. */
 	public void testSelectCongressmanThatNotExist() {
-		/*! Write Test Here. */
+		List<Congressman> congressmanList = 
+				validCongressmanDao.selectCongressmanByName( "valid name D" );
+		
+		List<Congressman> expectedList = new ArrayList<Congressman>();
+		expectedList.add( validCongressmanA );
+		
+		boolean result = compareListCongressman( congressmanList, 
+				expectedList );
+		
+		Assert.assertFalse( result );
 	}
 	
 	public void testSearchCongressmanBynameWithEmptyDatabase() {
@@ -312,4 +294,42 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		this.validCongressmanC.setTypeCongressman( "Deputy" );
 		this.validCongressmanC.setUfCongressman( "valid UF B" );
 	}
+	
+	private boolean compareListCongressman( List<Congressman> congressmanList, 
+			List<Congressman> expectedList ) {
+
+		boolean result = false;
+		
+	    Collections.sort( congressmanList, new Comparator<Congressman>() {
+			public int compare( Congressman c1, Congressman c2 ) {
+				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
+			}
+		});
+		
+		Collections.sort( expectedList, new Comparator<Congressman>() {
+			public int compare( Congressman c1, Congressman c2 ) {
+				return c2.getNameCongressman().compareTo( c1.getNameCongressman() );
+			}
+		});
+		
+		int sizeCongressmanList = congressmanList.size();
+		int sizeExpectedList = expectedList.size();
+		
+		if( sizeCongressmanList == sizeExpectedList ) {
+			for( int index = 0; index < sizeCongressmanList; index++ ) {
+				String nameCongressman = congressmanList.get( 0 ).getNameCongressman();
+				String expectedName = expectedList.get( 0 ).getNameCongressman();
+				
+				if( nameCongressman.equals( expectedName ) ) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		} else {
+			result = false;
+		}
+
+	    return result;
+    }
 }
