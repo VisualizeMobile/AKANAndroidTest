@@ -3,15 +3,21 @@ package br.com.visualize.akan.unitest.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
+import br.com.visualize.akan.domain.exception.NullCongressmanException;
+import br.com.visualize.akan.domain.model.Congressman;
 import br.com.visualize.akan.domain.model.Quota;
 import br.com.visualize.akan.domain.model.Statistic;
+
 
 public class QuotaDaoTest extends AndroidTestCase {
 	private QuotaDao validQuotaDao = null;
 	private Quota validQuota = null;
+	private List<Congressman> congressmanList = null;
 	
 	private Context context = null;
 	
@@ -26,12 +32,24 @@ public class QuotaDaoTest extends AndroidTestCase {
 		deleteValidEntitiesLocalDatabase();
 	}
 	
+	public void testInstatiationNotNullQuotaDao() {
+		Assert.assertNotNull( validQuotaDao );
+	}
+	
+	public void testSameInstanceWithSingleton() {
+		QuotaDao expectedQuotaDao = QuotaDao
+		        .getInstance( context );
+		
+		Assert.assertSame( expectedQuotaDao, validQuotaDao );
+	}
+	
+	
 	private void instantiateValidEntitiesToTest() {
 		this.validQuotaDao = QuotaDao.getInstance( context );
 		this.validQuota = new Quota();
 		
+		includeCongressmanInDatabase();
 		setValidQuota();
-	    
     }
 
 	private void insertValidEntitiesInLocalDatabase() {
@@ -43,19 +61,41 @@ public class QuotaDaoTest extends AndroidTestCase {
 
 	private void deleteValidEntitiesLocalDatabase() {
 	    validQuotaDao.deleteQuotasFromCongressman( 1 );
+	    deleteCongressmanOfDatabase();
     }
 	
 	private void setValidQuota() {
 		Statistic statisticQuota = new Statistic();
 		
-	    validQuota.setIdCongressmanQuota( 1 );
-	    validQuota.setValueQuota( 250000.00 );
-	    validQuota.setDescriptionQuota( "valid description" );
-	    validQuota.setIdQuota( 1 );
-	    validQuota.setIdUpdateQuota( 1 );
-	    validQuota.setTypeMonthByNumber( 3 );
-	    validQuota.setTypeQuotaByNumber( 1 );
-	    validQuota.setYearReferenceQuota( 2010 );
-	    validQuota.setStatisticQuota( statisticQuota );
+		int congressmanId = congressmanList.get( 0 ).getIdCongressman();
+		
+	    this.validQuota.setIdCongressmanQuota( congressmanId );
+	    this.validQuota.setValueQuota( 250000.00 );
+	    this.validQuota.setDescriptionQuota( "valid description" );
+	    this.validQuota.setIdQuota( 1 );
+	    this.validQuota.setIdUpdateQuota( 1 );
+	    this.validQuota.setTypeMonthByNumber( 3 );
+	    this.validQuota.setTypeQuotaByNumber( 1 );
+	    this.validQuota.setYearReferenceQuota( 2010 );
+	    this.validQuota.setStatisticQuota( statisticQuota );
     }
+
+	private void includeCongressmanInDatabase() {
+		congressmanList = new ArrayList<Congressman>();
+		
+	    congressmanList.add( new Congressman() );
+		congressmanList.get( 0 ).setIdCongressman( 1 );
+		
+		CongressmanDao congressmanDao = CongressmanDao.getInstance( context );
+		congressmanDao.insertAllCongressman( congressmanList );
+    }
+	
+	private void deleteCongressmanOfDatabase() {
+		CongressmanDao congressmanDao = CongressmanDao.getInstance( context );
+		try {
+	        congressmanDao.deleteAllCongressman();
+        } catch( NullCongressmanException e ) {
+	        e.printStackTrace();
+        }
+	}
 }
