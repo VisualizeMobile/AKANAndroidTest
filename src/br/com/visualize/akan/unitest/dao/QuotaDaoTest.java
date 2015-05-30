@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
@@ -43,6 +44,20 @@ public class QuotaDaoTest extends AndroidTestCase {
 		Assert.assertSame( expectedQuotaDao, validQuotaDao );
 	}
 	
+	public void testLocalDatabaseIsNotEmpty() {
+		boolean result = validQuotaDao.checkEmptyLocalDb();
+		
+		Assert.assertFalse( result );
+	}
+	
+	public void testLocalDatabaseIsEmpty() {
+		deleteValidEntitiesLocalDatabase();
+		
+		boolean result = validQuotaDao.checkEmptyLocalDb();
+		
+		Assert.assertTrue( result );
+	}
+	
 	
 	private void instantiateValidEntitiesToTest() {
 		this.validQuotaDao = QuotaDao.getInstance( context );
@@ -68,9 +83,10 @@ public class QuotaDaoTest extends AndroidTestCase {
 		Statistic statisticQuota = new Statistic();
 		
 		int congressmanId = congressmanList.get( 0 ).getIdCongressman();
+		Log.i("TEST DAO", "idCongressman: " + congressmanId);
 		
 	    this.validQuota.setIdCongressmanQuota( congressmanId );
-	    this.validQuota.setValueQuota( 250000.00 );
+	    this.validQuota.setValueQuota( 25000.00 );
 	    this.validQuota.setDescriptionQuota( "valid description" );
 	    this.validQuota.setIdQuota( 1 );
 	    this.validQuota.setIdUpdateQuota( 1 );
