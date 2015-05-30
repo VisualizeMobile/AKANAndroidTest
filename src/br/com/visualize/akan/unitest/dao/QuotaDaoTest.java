@@ -23,6 +23,9 @@ public class QuotaDaoTest extends AndroidTestCase {
 	private Quota validQuota = null;
 	private Quota nullQuota = null;
 	
+	private int validId = 0;
+	private int invalidId = 0;
+	
 	private List<Congressman> congressmanList = null;
 	
 	private Context context = null;
@@ -32,6 +35,9 @@ public class QuotaDaoTest extends AndroidTestCase {
 		
 		instantiateValidEntitiesToTest();
 		insertValidEntitiesInLocalDatabase();
+		
+		validId = congressmanList.get( 0 ).getIdCongressman();
+		invalidId = 2;
 	}
 
 	protected void tearDown() {
@@ -115,13 +121,30 @@ public class QuotaDaoTest extends AndroidTestCase {
 	}
 	
 	public void testGetQuotasOfValidCongressman() {
-		/*! Write Test Here. */
+		List<Quota> quotaList = new ArrayList<Quota>();
+		quotaList = validQuotaDao.getQuotasByIdCongressman( validId );
+		
+		List<Quota> expectedList = new ArrayList<Quota>();
+		expectedList.add( validQuota );
+		
+		boolean result = compareListQuota( quotaList, expectedList );
+		
+		Assert.assertTrue( result );
 	}
 	
+	/* TODO: Need raise a exception. */
 	public void testGetQuotasOfCongressmanThatNoExist() {
-		/*! Write Test Here. */
+		List<Quota> quotaList = new ArrayList<Quota>();
+		quotaList = validQuotaDao.getQuotasByIdCongressman( invalidId );
+		
+		List<Quota> expectedList = new ArrayList<Quota>();
+		
+		boolean result = compareListQuota( quotaList, expectedList );
+		
+		Assert.assertTrue( result );
 	}
 	
+	/* TODO: Need raise a exception. */
 	public void testGetQuotasOfCongressmanWithoutQuotas() {
 		/*! Write Test Here. */
 	}
@@ -156,7 +179,7 @@ public class QuotaDaoTest extends AndroidTestCase {
 	}
 
 	private void deleteValidEntitiesLocalDatabase() {
-	    validQuotaDao.deleteQuotasFromCongressman( 1 );
+	    validQuotaDao.deleteQuotasFromCongressman( validId );
 	    deleteCongressmanOfDatabase();
     }
 	
@@ -216,15 +239,19 @@ public class QuotaDaoTest extends AndroidTestCase {
 		int sizeExpectedList = expectedList.size();
 		
 		if( sizeQuotaList == sizeExpectedList ) {
-			for( int index = 0; index < sizeQuotaList; index++ ) {
-				int quotaId = quotaList.get( index ).getIdQuota();
-				int expectedId = expectedList.get( index ).getIdQuota();
-				
-				if( quotaId == expectedId ) {
-					result = true;
-				} else {
-					result = false;
+			if( sizeQuotaList != 0 ) {
+				for( int index = 0; index < sizeQuotaList; index++ ) {
+					int quotaId = quotaList.get( index ).getIdQuota();
+					int expectedId = expectedList.get( index ).getIdQuota();
+					
+					if( quotaId == expectedId ) {
+						result = true;
+					} else {
+						result = false;
+					}
 				}
+			} else {
+				result = true;
 			}
 		} else {
 			result = false;

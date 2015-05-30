@@ -329,17 +329,21 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		int sizeExpectedList = expectedList.size();
 		
 		if( sizeCongressmanList == sizeExpectedList ) {
-			for( int index = 0; index < sizeCongressmanList; index++ ) {
-				String nameCongressman = congressmanList.get( 0 ).
-						getNameCongressman();
-				String expectedName = expectedList.get( 0 ).
-						getNameCongressman();
-				
-				if( nameCongressman.equals( expectedName ) ) {
-					result = true;
-				} else {
-					result = false;
+			if( sizeCongressmanList != 0 ) {
+				for( int index = 0; index < sizeCongressmanList; index++ ) {
+					String nameCongressman = congressmanList.get( 0 ).
+							getNameCongressman();
+					String expectedName = expectedList.get( 0 ).
+							getNameCongressman();
+					
+					if( nameCongressman.equals( expectedName ) ) {
+						result = true;
+					} else {
+						result = false;
+					}
 				}
+			} else {
+				result = true;
 			}
 		} else {
 			result = false;
