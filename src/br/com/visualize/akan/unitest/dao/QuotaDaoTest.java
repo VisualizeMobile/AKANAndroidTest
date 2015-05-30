@@ -16,8 +16,11 @@ import br.com.visualize.akan.domain.model.Statistic;
 
 public class QuotaDaoTest extends AndroidTestCase {
 	private QuotaDao validQuotaDao = null;
+	
+	private Quota invalidQuota = null;
 	private Quota validQuota = null;
 	private Quota nullQuota = null;
+	
 	private List<Congressman> congressmanList = null;
 	
 	private Context context = null;
@@ -76,15 +79,23 @@ public class QuotaDaoTest extends AndroidTestCase {
 		
 		boolean result = validQuotaDao.insertQuotasById( quotas );
 		
-		Assert.assertTrue( result );
+		Assert.assertFalse( result );
 	}
 	
 	public void testInsertQuotaWithoutReferenceToCongressman() {
-		/*! Write Test Here. */
+		List<Quota> quotas = new ArrayList<Quota>();
+		
+		quotas.add( invalidQuota );
+		
+		boolean result = validQuotaDao.insertQuotasById( quotas );
+		
+		Assert.assertFalse( result );
 	}
 	
 	public void testDeleteQuotasFromValidCongressman() {
-		/*! Write Test Here. */
+		boolean result = validQuotaDao.deleteQuotasFromCongressman( 1 );
+		
+		Assert.assertTrue( result );
 	}
 	
 	public void testDeleteQuotasFromCongressmanThatNoExist() {
@@ -123,6 +134,7 @@ public class QuotaDaoTest extends AndroidTestCase {
 	private void instantiateValidEntitiesToTest() {
 		this.validQuotaDao = QuotaDao.getInstance( context );
 		this.validQuota = new Quota();
+		this.invalidQuota = new Quota();
 		
 		includeCongressmanInDatabase();
 		setValidQuota();
