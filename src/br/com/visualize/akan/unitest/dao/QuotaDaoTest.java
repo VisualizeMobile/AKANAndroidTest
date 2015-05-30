@@ -6,7 +6,6 @@ import java.util.List;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
-import android.util.Log;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
@@ -18,6 +17,7 @@ import br.com.visualize.akan.domain.model.Statistic;
 public class QuotaDaoTest extends AndroidTestCase {
 	private QuotaDao validQuotaDao = null;
 	private Quota validQuota = null;
+	private Quota nullQuota = null;
 	private List<Congressman> congressmanList = null;
 	
 	private Context context = null;
@@ -58,6 +58,67 @@ public class QuotaDaoTest extends AndroidTestCase {
 		Assert.assertTrue( result );
 	}
 	
+	public void testInsertValidQuota() {
+		deleteValidEntitiesLocalDatabase();
+		
+		List<Quota> quotas = new ArrayList<Quota>();
+		quotas.add( validQuota );
+		
+		boolean result = validQuotaDao.insertQuotasById( quotas );
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testInsertNullQuota() {
+		List<Quota> quotas = new ArrayList<Quota>();
+		
+		quotas.add( nullQuota );
+		
+		boolean result = validQuotaDao.insertQuotasById( quotas );
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testInsertQuotaWithoutReferenceToCongressman() {
+		/*! Write Test Here. */
+	}
+	
+	public void testDeleteQuotasFromValidCongressman() {
+		/*! Write Test Here. */
+	}
+	
+	public void testDeleteQuotasFromCongressmanThatNoExist() {
+		/*! Write Test Here. */
+	}
+	
+	public void testDeleteQuotasWithEmptyDatabase() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetQuotasOfValidCongressman() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetQuotasOfCongressmanThatNoExist() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetQuotasOfCongressmanWithoutQuotas() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetYears() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetYearsWhenThereAreNotQuotas() {
+		/*! Write Test Here. */
+	}
+	
+	public void testGetYearsWhenQuotasDontHaveYear() {
+		/*! Write Test Here. */
+	}
+	
 	
 	private void instantiateValidEntitiesToTest() {
 		this.validQuotaDao = QuotaDao.getInstance( context );
@@ -83,7 +144,6 @@ public class QuotaDaoTest extends AndroidTestCase {
 		Statistic statisticQuota = new Statistic();
 		
 		int congressmanId = congressmanList.get( 0 ).getIdCongressman();
-		Log.i("TEST DAO", "idCongressman: " + congressmanId);
 		
 	    this.validQuota.setIdCongressmanQuota( congressmanId );
 	    this.validQuota.setValueQuota( 25000.00 );
