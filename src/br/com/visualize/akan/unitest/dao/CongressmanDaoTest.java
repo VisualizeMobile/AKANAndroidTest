@@ -193,7 +193,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		Assert.assertEquals( expectedResult, result );
 	}
 	
-	/* TODO: Create a issue, because this identify a error. */
 	public void testSelectCongressmanByName() {
 		List<Congressman> congressmanList = 
 				validCongressmanDao.selectCongressmanByName( "valid name A" );
@@ -208,7 +207,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	/* TODO: Need raise a exception. */
-	/* TODO: Create a issue, because this identify a error. */
 	public void testSelectCongressmanThatNotExist() {
 		List<Congressman> congressmanList = 
 				validCongressmanDao.selectCongressmanByName( "valid name D" );
@@ -223,7 +221,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	/* TODO: Need raise a exception. */
-	/* TODO: Create a issue, because this identify a error. */
 	public void testSearchCongressmanByNameWithEmptyDatabase() {
 		deleteValidEntitiesLocalDatabase();
 		
@@ -236,7 +233,6 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	/* TODO: Need raise a exception. */
-	/* TODO: Create a issue, because this identify a error. */
 	public void testSearchCongressmanWithoutName() {
 		List<Congressman> congressmanList = 
 				validCongressmanDao.selectCongressmanByName( "" );

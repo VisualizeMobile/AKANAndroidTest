@@ -1,6 +1,8 @@
 package br.com.visualize.akan.unitest.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -99,11 +101,17 @@ public class QuotaDaoTest extends AndroidTestCase {
 	}
 	
 	public void testDeleteQuotasFromCongressmanThatNoExist() {
-		/*! Write Test Here. */
+		boolean result = validQuotaDao.deleteQuotasFromCongressman( 2 );
+		
+		Assert.assertFalse( result );
 	}
 	
 	public void testDeleteQuotasWithEmptyDatabase() {
-		/*! Write Test Here. */
+		deleteValidEntitiesLocalDatabase();
+		
+		boolean result = validQuotaDao.deleteQuotasFromCongressman( 1 );
+		
+		Assert.assertFalse( result );
 	}
 	
 	public void testGetQuotasOfValidCongressman() {
@@ -186,4 +194,51 @@ public class QuotaDaoTest extends AndroidTestCase {
 	        e.printStackTrace();
         }
 	}
+	
+	private boolean compareListQuota( List<Quota> quotaList, 
+			List<Quota> expectedList ) {
+
+		boolean result = false;
+		
+	    sortListQuota( quotaList );
+		sortListQuota( expectedList );
+		
+		result = isListQuotaEquals( quotaList, expectedList );
+
+	    return result;
+    }
+	
+	private boolean isListQuotaEquals( List<Quota> quotaList,
+            List<Quota> expectedList ) {
+		boolean result = false;
+		
+	    int sizeQuotaList = quotaList.size();
+		int sizeExpectedList = expectedList.size();
+		
+		if( sizeQuotaList == sizeExpectedList ) {
+			for( int index = 0; index < sizeQuotaList; index++ ) {
+				int quotaId = quotaList.get( index ).getIdQuota();
+				int expectedId = expectedList.get( index ).getIdQuota();
+				
+				if( quotaId == expectedId ) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		} else {
+			result = false;
+		}
+		
+	    return result;
+    }
+	
+	private void sortListQuota( List<Quota> quotaList ) {
+	    Collections.sort( quotaList, new Comparator<Quota>() {
+			public int compare( Quota c1, Quota c2 ) {
+				return Integer.valueOf( c1.getIdQuota() ).
+						compareTo( c2.getIdQuota() );
+			}
+		});
+    }
 }
