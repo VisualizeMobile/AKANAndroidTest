@@ -1,8 +1,6 @@
 package br.com.visualize.akan.unitest.dao;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -127,10 +125,11 @@ public class QuotaDaoTest extends AndroidTestCase {
 		List<Quota> expectedList = new ArrayList<Quota>();
 		expectedList.add( validQuota );
 		
-		boolean result = compareListQuota( quotaList, expectedList );
+		boolean result = compareList( quotaList, expectedList );
 		
 		Assert.assertTrue( result );
 	}
+
 	
 	/* TODO: Need raise a exception. */
 	public void testGetQuotasOfCongressmanThatNoExist() {
@@ -139,18 +138,23 @@ public class QuotaDaoTest extends AndroidTestCase {
 		
 		List<Quota> expectedList = new ArrayList<Quota>();
 		
-		boolean result = compareListQuota( quotaList, expectedList );
+		boolean result = compareList( quotaList, expectedList );
 		
 		Assert.assertTrue( result );
 	}
 	
 	/* TODO: Need raise a exception. */
 	public void testGetQuotasOfCongressmanWithoutQuotas() {
-		/*! Write Test Here. */
-	}
-	
-	public void testGetYears() {
-		/*! Write Test Here. */
+		deleteValidEntitiesLocalDatabase();
+		includeCongressmanInDatabase();
+		
+		List<Quota> quotaList = new ArrayList<Quota>();
+		quotaList = validQuotaDao.getQuotasByIdCongressman( validId );
+		
+		int expectedResult = 0;
+		int result = quotaList.size();
+		
+		Assert.assertEquals( expectedResult, result );
 	}
 	
 	public void testGetYearsWhenThereAreNotQuotas() {
@@ -218,54 +222,17 @@ public class QuotaDaoTest extends AndroidTestCase {
         }
 	}
 	
-	private boolean compareListQuota( List<Quota> quotaList, 
-			List<Quota> expectedList ) {
-
-		boolean result = false;
+	private boolean compareList( List<?> firstList, List<?> secondList ) {
+		ArrayList<?> comparedList = new ArrayList<>( firstList );
 		
-	    sortListQuota( quotaList );
-		sortListQuota( expectedList );
-		
-		result = isListQuotaEquals( quotaList, expectedList );
-
-	    return result;
-    }
-	
-	private boolean isListQuotaEquals( List<Quota> quotaList,
-            List<Quota> expectedList ) {
-		boolean result = false;
-		
-	    int sizeQuotaList = quotaList.size();
-		int sizeExpectedList = expectedList.size();
-		
-		if( sizeQuotaList == sizeExpectedList ) {
-			if( sizeQuotaList != 0 ) {
-				for( int index = 0; index < sizeQuotaList; index++ ) {
-					int quotaId = quotaList.get( index ).getIdQuota();
-					int expectedId = expectedList.get( index ).getIdQuota();
-					
-					if( quotaId == expectedId ) {
-						result = true;
-					} else {
-						result = false;
-					}
-				}
+		for( Object element : secondList ) {
+			if( !comparedList.remove( element ) ) {
+				return false;
 			} else {
-				result = true;
+				/*! Nothing To Do */
 			}
-		} else {
-			result = false;
 		}
 		
-	    return result;
-    }
-	
-	private void sortListQuota( List<Quota> quotaList ) {
-	    Collections.sort( quotaList, new Comparator<Quota>() {
-			public int compare( Quota c1, Quota c2 ) {
-				return Integer.valueOf( c1.getIdQuota() ).
-						compareTo( c2.getIdQuota() );
-			}
-		});
-    }
+		return comparedList.isEmpty();
+	}
 }
