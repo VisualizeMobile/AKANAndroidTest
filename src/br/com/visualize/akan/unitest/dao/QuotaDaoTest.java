@@ -157,12 +157,28 @@ public class QuotaDaoTest extends AndroidTestCase {
 		Assert.assertEquals( expectedResult, result );
 	}
 	
-	public void testGetYearsWhenThereAreNotQuotas() {
-		/*! Write Test Here. */
+	public void testGetYears() {
+		List<Integer> expected_result = new ArrayList<Integer>();
+		expected_result.add( 2010 );
+		
+		List<Integer> yearsList = validQuotaDao.getYears();
+		
+		boolean result = compareList( yearsList, expected_result );
+		
+		Assert.assertTrue( result );
+		
 	}
 	
-	public void testGetYearsWhenQuotasDontHaveYear() {
-		/*! Write Test Here. */
+	/* TODO: Need raise a exception. */
+	public void testGetYearsWhenThereAreNotQuotas() {
+		deleteValidEntitiesLocalDatabase();
+		
+		List<Integer> expected_result = new ArrayList<Integer>();
+		List<Integer> yearsList = validQuotaDao.getYears();
+		
+		boolean result = compareList( yearsList, expected_result );
+		
+		Assert.assertTrue( result );
 	}
 	
 	
