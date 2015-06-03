@@ -3,7 +3,6 @@ package br.com.visualize.akan.unitest.dao;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
-import android.util.Log;
 import br.com.visualize.akan.api.dao.UrlDao;
 import br.com.visualize.akan.domain.model.Url;
 
@@ -58,14 +57,27 @@ public class UrlDaoTest extends AndroidTestCase {
 	
 	public void testInsertValidUrl() {
 		boolean result = validUrlDao.insertUrl( validUrl );
-		
 		Assert.assertTrue( result );
 	}
 	
+	/*TODO: need raise a exception. */
 	public void testInsertInvalidUrl() {
 		boolean result = validUrlDao.insertUrl( invalidUrl );
 		
 		Assert.assertFalse( result );
+	}
+	
+	/*TODO: need raise a exception. */
+	public void testInsertNullUrl() {
+		boolean result = validUrlDao.insertUrl( nullUrl );
+		
+		Assert.assertFalse( result );
+	}
+	
+	public void testDeleteValidUrl() {
+		boolean result = validUrlDao.deleteUrl( validUrl );
+		
+		Assert.assertTrue( result );
 	}
 
 	
