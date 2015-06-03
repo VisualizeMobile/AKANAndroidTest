@@ -3,6 +3,7 @@ package br.com.visualize.akan.unitest.dao;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import br.com.visualize.akan.api.dao.UrlDao;
 import br.com.visualize.akan.domain.model.Url;
 
@@ -41,6 +42,33 @@ public class UrlDaoTest extends AndroidTestCase {
 		Assert.assertSame( expectedUrlDao, validUrlDao );
 	}
 	
+	public void testLocalDatabaseIsNotEmpty() {
+		boolean result = validUrlDao.checkEmptyLocalDb();
+		
+		Assert.assertFalse( result );
+	}
+	
+	public void testLocalDatabaseIsEmpty() {
+		deleteValidEntitiesLocalDatabase();
+		
+		boolean result = validUrlDao.checkEmptyLocalDb();
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testInsertValidUrl() {
+		boolean result = validUrlDao.insertUrl( validUrl );
+		
+		Assert.assertTrue( result );
+	}
+	
+	public void testInsertInvalidUrl() {
+		boolean result = validUrlDao.insertUrl( invalidUrl );
+		
+		Assert.assertFalse( result );
+	}
+
+	
 	
 	private void deleteValidEntitiesLocalDatabase() {
 		validUrlDao.deleteUrl( validUrl );
@@ -60,7 +88,6 @@ public class UrlDaoTest extends AndroidTestCase {
     }
 
 	private void setValidUrl() {
-		this.validUrl.setUpdateVerifierUrl( 1 );
 		this.validUrl.setIdUpdateUrl( 1 );
 		
 	    this.validUrl.setDefaultUrl( urlDefault );
