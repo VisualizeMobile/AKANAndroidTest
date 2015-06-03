@@ -1,5 +1,6 @@
 package br.com.visualize.akan.unitest.dao;
 
+import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.UrlDao;
@@ -12,6 +13,10 @@ public class UrlDaoTest extends AndroidTestCase {
 	private Url nullUrl = null;
 	
 	private UrlDao validUrlDao = null;
+	
+	private String urlDefault = "http://www.defaulturl.com";
+	private String urlFirstAlternative = "http://www.firsturl.com";
+	private String urlSecondAlternative = "http://www.secondurl.com";
 	
 	private Context context = null;
 	
@@ -26,6 +31,17 @@ public class UrlDaoTest extends AndroidTestCase {
 		deleteValidEntitiesLocalDatabase();
 	}
 	
+	public void testInstatiationNotNullUrlDao() {
+		Assert.assertNotNull( validUrlDao );
+	}
+	
+	public void testSameInstanceWithSingleton() {
+		UrlDao expectedUrlDao = UrlDao.getInstance( context );
+		
+		Assert.assertSame( expectedUrlDao, validUrlDao );
+	}
+	
+	
 	private void deleteValidEntitiesLocalDatabase() {
 		validUrlDao.deleteUrl( validUrl );
     }
@@ -39,6 +55,16 @@ public class UrlDaoTest extends AndroidTestCase {
 	    validUrl = new Url();
 	    invalidUrl = new Url();
 	    validUrlDao = UrlDao.getInstance( context );
-	 
+	    
+	    setValidUrl();
+    }
+
+	private void setValidUrl() {
+		this.validUrl.setUpdateVerifierUrl( 1 );
+		this.validUrl.setIdUpdateUrl( 1 );
+		
+	    this.validUrl.setDefaultUrl( urlDefault );
+	    this.validUrl.setFirstAlternativeUrl( urlFirstAlternative );
+	    this.validUrl.setSecondAlternativeUrl( urlSecondAlternative );
     }
 }
