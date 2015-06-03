@@ -74,10 +74,43 @@ public class UrlDaoTest extends AndroidTestCase {
 		Assert.assertFalse( result );
 	}
 	
+	/*TODO: need raise a exception. */
 	public void testDeleteValidUrl() {
 		boolean result = validUrlDao.deleteUrl( validUrl );
 		
 		Assert.assertTrue( result );
+	}
+	
+	/*TODO: need raise a exception. */
+	public void testDeleteUrlWithoutId() {
+		boolean result = validUrlDao.deleteUrl( invalidUrl );
+		
+		Assert.assertFalse( result );
+	}
+	
+	/*TODO: need raise a exception. */
+	public void testDeleteNullUrl() {
+		boolean result = validUrlDao.deleteUrl( nullUrl );
+		
+		Assert.assertFalse( result );
+	}
+	
+	/*TODO: need raise a exception. */
+	public void testDeleteValidUrlWithEmptyDatabase() {
+		deleteValidEntitiesLocalDatabase();
+		
+		boolean result = validUrlDao.deleteUrl( validUrl );
+		
+		Assert.assertFalse( result );
+	}
+	
+	public void testGetValidUrl() {
+		Url caughtUrl = validUrlDao.getUrl();
+		
+		int result = caughtUrl.getIdUpdateUrl();
+		int expectedResult = 0;
+		
+		Assert.assertEquals( expectedResult, result );
 	}
 
 	
@@ -100,7 +133,7 @@ public class UrlDaoTest extends AndroidTestCase {
     }
 
 	private void setValidUrl() {
-		this.validUrl.setIdUpdateUrl( 1 );
+		this.validUrl.setIdUpdateUrl( 0 );
 		
 	    this.validUrl.setDefaultUrl( urlDefault );
 	    this.validUrl.setFirstAlternativeUrl( urlFirstAlternative );
