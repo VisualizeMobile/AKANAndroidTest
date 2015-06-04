@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
-
-import org.apache.http.client.ResponseHandler;
-
 import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
@@ -25,8 +22,6 @@ public class CongressmanControllerTest extends AndroidTestCase {
     private CongressmanDao validCongressmanDao = null;
     private Congressman validCongressman = null;
     private Context context = null;
-    
-    private ResponseHandler<String> validResponse = null;
     
     public void setUp() {
         this.context = getContext();
@@ -49,6 +44,24 @@ public class CongressmanControllerTest extends AndroidTestCase {
         
         Assert.assertSame( expectedCongressmanController,
                 validCongressmanController );
+    }
+    
+    public void testSetCongressmanControllerWithValidCongressman() {
+        validCongressmanController.setCongressman( validCongressman );
+
+        int result = validCongressmanController.getCongresman().
+                getIdCongressman();
+        
+        int expectedResult = validCongressman.getIdCongressman();
+        
+        Assert.assertEquals( expectedResult, result );
+    }
+    
+    public void testCongressmanSetupInCongressmanControllerShouldNotBeNull() {
+        validCongressmanController.setCongressman( validCongressman );
+        Congressman result = validCongressmanController.getCongresman();
+        
+        Assert.assertNotNull( result );
     }
     
 
