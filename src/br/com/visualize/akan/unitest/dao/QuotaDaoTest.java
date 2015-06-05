@@ -10,6 +10,7 @@ import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
 import br.com.visualize.akan.domain.exception.LocalDatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
+import br.com.visualize.akan.domain.exception.NullQuotaException;
 import br.com.visualize.akan.domain.model.Congressman;
 import br.com.visualize.akan.domain.model.Quota;
 import br.com.visualize.akan.domain.model.Statistic;
@@ -74,9 +75,14 @@ public class QuotaDaoTest extends AndroidTestCase {
 		List<Quota> quotas = new ArrayList<Quota>();
 		quotas.add( validQuota );
 		
-		boolean result = validQuotaDao.insertQuotasById( quotas );
-		
-		Assert.assertTrue( result );
+		boolean result;
+        try {
+            result = validQuotaDao.insertQuotasById( quotas );
+            
+            Assert.assertTrue( result );
+        } catch( NullQuotaException nqe ) {
+            nqe.printStackTrace();
+        }
 	}
 	
 	public void testInsertNullQuota() {
@@ -84,9 +90,14 @@ public class QuotaDaoTest extends AndroidTestCase {
 		
 		quotas.add( nullQuota );
 		
-		boolean result = validQuotaDao.insertQuotasById( quotas );
-		
-		Assert.assertFalse( result );
+		boolean result;
+        try {
+            result = validQuotaDao.insertQuotasById( quotas );
+            
+            Assert.assertFalse( result );
+        } catch( NullQuotaException nqe ) {
+            nqe.printStackTrace();
+        }
 	}
 	
 	public void testInsertQuotaWithoutReferenceToCongressman() {
@@ -94,9 +105,14 @@ public class QuotaDaoTest extends AndroidTestCase {
 		
 		quotas.add( invalidQuota );
 		
-		boolean result = validQuotaDao.insertQuotasById( quotas );
-		
-		Assert.assertFalse( result );
+		boolean result;
+        try {
+            result = validQuotaDao.insertQuotasById( quotas );
+            
+            Assert.assertFalse( result );
+        } catch( NullQuotaException nqe ) {
+            nqe.printStackTrace();
+        }
 	}
 	
 	public void testDeleteQuotasFromValidCongressman() {
@@ -198,7 +214,11 @@ public class QuotaDaoTest extends AndroidTestCase {
 		List<Quota> insertedQuotas = new ArrayList<Quota>();
 		insertedQuotas.add( validQuota );
 		
-		validQuotaDao.insertQuotasById( insertedQuotas );
+		try {
+            validQuotaDao.insertQuotasById( insertedQuotas );
+        } catch( NullQuotaException nqe ) {
+            nqe.printStackTrace();
+        }
 	}
 
 	private void deleteValidEntitiesLocalDatabase() {
