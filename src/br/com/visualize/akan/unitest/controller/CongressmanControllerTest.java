@@ -9,6 +9,7 @@ import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.domain.controller.CongressmanController;
+import br.com.visualize.akan.domain.exception.LocalDatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
 
@@ -85,8 +86,10 @@ public class CongressmanControllerTest extends AndroidTestCase {
     private void deleteEntitiesLocalDatabase() {
         try {
             validCongressmanDao.deleteAllCongressman();
-        } catch( NullCongressmanException e ) {
-            e.printStackTrace();
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
     }
     

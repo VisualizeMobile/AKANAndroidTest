@@ -2,14 +2,13 @@ package br.com.visualize.akan.unitest.dao;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
+import br.com.visualize.akan.domain.exception.LocalDatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
 
@@ -95,8 +94,10 @@ public class CongressmanDaoTest extends AndroidTestCase {
         try {
 	        result = validCongressmanDao.deleteAllCongressman();
 
-        } catch( NullCongressmanException e ) {
-	        e.printStackTrace();
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 		
 		Assert.assertTrue( result );
@@ -105,13 +106,15 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	public void testDeleteAllCongressmanWithEmptyDatabase() {
 		deleteValidEntitiesLocalDatabase();
 		
-		boolean result = true;
+		boolean result = false;
 		
 		try {
 			result = validCongressmanDao.deleteAllCongressman();
 			
-		} catch( NullCongressmanException e ) {
-	        e.printStackTrace();
+		} catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 
 		Assert.assertFalse( result );
@@ -200,7 +203,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		List<Congressman> expectedList = new ArrayList<Congressman>();
 		expectedList.add( validCongressmanA );
 		
-		boolean result = compareListCongressman( congressmanList, 
+		boolean result = compareList( congressmanList, 
 				expectedList );
 		
 		Assert.assertTrue( result );
@@ -214,7 +217,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		List<Congressman> expectedList = new ArrayList<Congressman>();
 		expectedList.add( validCongressmanA );
 		
-		boolean result = compareListCongressman( congressmanList, 
+		boolean result = compareList( congressmanList, 
 				expectedList );
 		
 		Assert.assertFalse( result );
@@ -267,8 +270,10 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		try {
 	        validCongressmanDao.deleteAllCongressman();
 	        
-        } catch( NullCongressmanException e ) {
-	        e.printStackTrace();
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 	
@@ -308,56 +313,17 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		this.validCongressmanC.setUfCongressman( "valid UF B" );
 	}
 	
-	private boolean compareListCongressman( List<Congressman> congressmanList, 
-			List<Congressman> expectedList ) {
-
-		boolean result = false;
-		
-	    sortListCongressman( congressmanList );
-		sortListCongressman( expectedList );
-		
-		result = isListCongressmanEquals( congressmanList, expectedList );
-
-	    return result;
-    }
-
-	private boolean isListCongressmanEquals( List<Congressman> congressmanList,
-            List<Congressman> expectedList ) {
-		boolean result = false;
-		
-	    int sizeCongressmanList = congressmanList.size();
-		int sizeExpectedList = expectedList.size();
-		
-		if( sizeCongressmanList == sizeExpectedList ) {
-			if( sizeCongressmanList != 0 ) {
-				for( int index = 0; index < sizeCongressmanList; index++ ) {
-					String nameCongressman = congressmanList.get( 0 ).
-							getNameCongressman();
-					String expectedName = expectedList.get( 0 ).
-							getNameCongressman();
-					
-					if( nameCongressman.equals( expectedName ) ) {
-						result = true;
-					} else {
-						result = false;
-					}
-				}
-			} else {
-				result = true;
-			}
-		} else {
-			result = false;
-		}
-		
-	    return result;
-    }
-
-	private void sortListCongressman( List<Congressman> congressmanList ) {
-	    Collections.sort( congressmanList, new Comparator<Congressman>() {
-			public int compare( Congressman c1, Congressman c2 ) {
-				return c2.getNameCongressman().
-						compareTo( c1.getNameCongressman() );
-			}
-		});
+	private boolean compareList( List<?> firstList, List<?> secondList ) {
+        ArrayList<?> comparedList = new ArrayList<>( firstList );
+        
+        for( Object element : secondList ) {
+            if( !comparedList.remove( element ) ) {
+                return false;
+            } else {
+                /*! Nothing To Do */
+            }
+        }
+        
+        return comparedList.isEmpty();
     }
 }

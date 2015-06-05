@@ -8,6 +8,7 @@ import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
+import br.com.visualize.akan.domain.exception.LocalDatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
 import br.com.visualize.akan.domain.model.Quota;
@@ -233,8 +234,10 @@ public class QuotaDaoTest extends AndroidTestCase {
 		CongressmanDao congressmanDao = CongressmanDao.getInstance( context );
 		try {
 	        congressmanDao.deleteAllCongressman();
-        } catch( NullCongressmanException e ) {
-	        e.printStackTrace();
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 	
