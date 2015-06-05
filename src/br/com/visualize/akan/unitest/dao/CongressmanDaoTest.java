@@ -28,7 +28,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	
 	private Congressman nullCongressman = null;
 	
-	protected void setUp() {
+	protected void setUp() throws NullCongressmanException {
 		this.context = getContext();
 		
 		instantiateValidEntitiesToTest();
@@ -71,10 +71,14 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		congressmanList.add( validCongressmanB );
 		congressmanList.add( validCongressmanC );
 		
-		boolean result = 
-				validCongressmanDao.insertAllCongressman( congressmanList );
-		
-		Assert.assertTrue( result );
+		boolean result;
+        try {
+            result = validCongressmanDao.insertAllCongressman( congressmanList );
+            
+            Assert.assertTrue( result );
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        }
 	}
 	
 	public void testInsertAllNullCongressman() {
@@ -84,10 +88,16 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		congressmanList.add( nullCongressman );
 		congressmanList.add( nullCongressman );
 		
-		boolean result = 
-				validCongressmanDao.insertAllCongressman( congressmanList );
+		boolean result;
 		
-		Assert.assertFalse( result );
+        try {
+            result = validCongressmanDao.insertAllCongressman( congressmanList );
+            
+            Assert.assertFalse( result );
+            
+        } catch( NullCongressmanException nce ) {
+            nce.printStackTrace();
+        }
 	}
 	
 	public void testDeleteAllCongressman() {
@@ -258,7 +268,8 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		setValidCongressmanC();
 	}
 	
-	private void insertValidEntitiesInLocalDatabase() {
+	private void insertValidEntitiesInLocalDatabase() 
+	        throws NullCongressmanException {
 		List<Congressman> congressmanList = new ArrayList<Congressman>();
 		
 		congressmanList.add( validCongressmanA );

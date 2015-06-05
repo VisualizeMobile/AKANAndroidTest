@@ -24,7 +24,7 @@ public class CongressmanControllerTest extends AndroidTestCase {
     private Congressman validCongressman = null;
     private Context context = null;
     
-    public void setUp() {
+    public void setUp() throws NullCongressmanException {
         this.context = getContext();
         
         instantiateValidEntitiesToTest();
@@ -75,7 +75,8 @@ public class CongressmanControllerTest extends AndroidTestCase {
         setValidCongressman();
     }
     
-    private void insertValidEntitiesInLocalDatabase() {
+    private void insertValidEntitiesInLocalDatabase() 
+            throws NullCongressmanException {
         List<Congressman> congressmanList = new ArrayList<Congressman>();
         
         congressmanList.add( validCongressman );

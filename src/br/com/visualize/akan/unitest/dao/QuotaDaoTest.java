@@ -29,7 +29,7 @@ public class QuotaDaoTest extends AndroidTestCase {
 	
 	private Context context = null;
 	
-	protected void setUp() {
+	protected void setUp() throws NullCongressmanException {
 		this.context = getContext();
 		
 		instantiateValidEntitiesToTest();
@@ -145,7 +145,8 @@ public class QuotaDaoTest extends AndroidTestCase {
 	}
 	
 	/* TODO: Need raise a exception. */
-	public void testGetQuotasOfCongressmanWithoutQuotas() {
+	public void testGetQuotasOfCongressmanWithoutQuotas() 
+	        throws NullCongressmanException {
 		deleteValidEntitiesLocalDatabase();
 		includeCongressmanInDatabase();
 		
@@ -183,7 +184,8 @@ public class QuotaDaoTest extends AndroidTestCase {
 	}
 	
 	
-	private void instantiateValidEntitiesToTest() {
+	private void instantiateValidEntitiesToTest() 
+	        throws NullCongressmanException {
 		this.validQuotaDao = QuotaDao.getInstance( context );
 		this.validQuota = new Quota();
 		this.invalidQuota = new Quota();
@@ -220,7 +222,8 @@ public class QuotaDaoTest extends AndroidTestCase {
 	    this.validQuota.setStatisticQuota( statisticQuota );
     }
 
-	private void includeCongressmanInDatabase() {
+	private void includeCongressmanInDatabase() 
+	        throws NullCongressmanException {
 		congressmanList = new ArrayList<Congressman>();
 		
 	    congressmanList.add( new Congressman() );
