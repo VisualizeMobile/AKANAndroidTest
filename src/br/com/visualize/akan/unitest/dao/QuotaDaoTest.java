@@ -8,7 +8,7 @@ import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
 import br.com.visualize.akan.api.dao.QuotaDao;
-import br.com.visualize.akan.domain.exception.LocalDatabaseInvalidOperationException;
+import br.com.visualize.akan.domain.exception.DatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.exception.NullQuotaException;
 import br.com.visualize.akan.domain.model.Congressman;
@@ -82,6 +82,8 @@ public class QuotaDaoTest extends AndroidTestCase {
             Assert.assertTrue( result );
         } catch( NullQuotaException nqe ) {
             nqe.printStackTrace();
+        } catch( DatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 	
@@ -97,6 +99,8 @@ public class QuotaDaoTest extends AndroidTestCase {
             Assert.assertFalse( result );
         } catch( NullQuotaException nqe ) {
             nqe.printStackTrace();
+        } catch( DatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 	
@@ -106,12 +110,15 @@ public class QuotaDaoTest extends AndroidTestCase {
 		quotas.add( invalidQuota );
 		
 		boolean result;
+		
         try {
             result = validQuotaDao.insertQuotasById( quotas );
             
             Assert.assertFalse( result );
         } catch( NullQuotaException nqe ) {
             nqe.printStackTrace();
+        } catch( DatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 	
@@ -218,6 +225,8 @@ public class QuotaDaoTest extends AndroidTestCase {
             validQuotaDao.insertQuotasById( insertedQuotas );
         } catch( NullQuotaException nqe ) {
             nqe.printStackTrace();
+        } catch( DatabaseInvalidOperationException ldioe ) {
+            ldioe.printStackTrace();
         }
 	}
 
@@ -259,7 +268,7 @@ public class QuotaDaoTest extends AndroidTestCase {
 	        congressmanDao.deleteAllCongressman();
         } catch( NullCongressmanException nce ) {
             nce.printStackTrace();
-        } catch( LocalDatabaseInvalidOperationException ldioe ) {
+        } catch( DatabaseInvalidOperationException ldioe ) {
             ldioe.printStackTrace();
         }
 	}
