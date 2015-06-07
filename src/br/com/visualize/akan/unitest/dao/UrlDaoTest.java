@@ -4,6 +4,7 @@ package br.com.visualize.akan.unitest.dao;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import br.com.visualize.akan.api.dao.UrlDao;
 import br.com.visualize.akan.domain.model.Url;
 
@@ -15,9 +16,13 @@ public class UrlDaoTest extends AndroidTestCase {
 	
 	private UrlDao validUrlDao = null;
 	
-	private String urlDefault = "http://www.defaulturl.com";
-	private String urlFirstAlternative = "http://www.firsturl.com";
-	private String urlSecondAlternative = "http://www.secondurl.com";
+	private String validUrlDefault = "http://www.defaulturl.com";
+	private String validUrlFirstAlternative = "http://www.firsturl.com";
+	private String validUrlSecondAlternative = "http://www.secondurl.com";
+	
+	private String invalidUrlDefault = "defaulturl.com";
+    private String invalidUrlFirstAlternative = "firsturl.com";
+    private String invalidUrlSecondAlternative = "secondurl.com";
 	
 	private Context context = null;
 	
@@ -63,6 +68,7 @@ public class UrlDaoTest extends AndroidTestCase {
 	
 	/* TODO: need raise a exception. */
 	public void testInsertInvalidUrl() {
+	    Log.i( "TEST DAO", "invalidUrl.id: " + invalidUrl.getUpdateVerifierUrl() );
 		boolean result = validUrlDao.insertUrl( invalidUrl );
 		
 		Assert.assertFalse( result );
@@ -157,14 +163,20 @@ public class UrlDaoTest extends AndroidTestCase {
 		invalidUrl = new Url();
 		validUrlDao = UrlDao.getInstance( context );
 		
-		setValidUrl();
+		setEntities();
 	}
 	
-	private void setValidUrl() {
+	private void setEntities() {
 		this.validUrl.setIdUpdateUrl( 0 );
+		this.validUrl.setUpdateVerifierUrl( 0 );
+		this.validUrl.setDefaultUrl( validUrlDefault );
+		this.validUrl.setFirstAlternativeUrl( validUrlFirstAlternative );
+		this.validUrl.setSecondAlternativeUrl( validUrlSecondAlternative );
 		
-		this.validUrl.setDefaultUrl( urlDefault );
-		this.validUrl.setFirstAlternativeUrl( urlFirstAlternative );
-		this.validUrl.setSecondAlternativeUrl( urlSecondAlternative );
+		this.invalidUrl.setIdUpdateUrl( 0 );
+        this.invalidUrl.setUpdateVerifierUrl( 0 );
+        this.invalidUrl.setDefaultUrl( invalidUrlDefault );
+        this.invalidUrl.setFirstAlternativeUrl( invalidUrlFirstAlternative );
+        this.invalidUrl.setSecondAlternativeUrl( invalidUrlSecondAlternative );
 	}
 }
