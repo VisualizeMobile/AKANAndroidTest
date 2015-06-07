@@ -4,7 +4,6 @@ package br.com.visualize.akan.unitest.dao;
 import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
-import android.util.Log;
 import br.com.visualize.akan.api.dao.UrlDao;
 import br.com.visualize.akan.domain.model.Url;
 
@@ -68,7 +67,6 @@ public class UrlDaoTest extends AndroidTestCase {
 	
 	/* TODO: need raise a exception. */
 	public void testInsertInvalidUrl() {
-	    Log.i( "TEST DAO", "invalidUrl.id: " + invalidUrl.getUpdateVerifierUrl() );
 		boolean result = validUrlDao.insertUrl( invalidUrl );
 		
 		Assert.assertFalse( result );
@@ -120,21 +118,6 @@ public class UrlDaoTest extends AndroidTestCase {
 		Assert.assertEquals( expectedResult, result );
 	}
 	
-	/* TODO: creating a issue about this. */
-	public void testGetInvalidUrl() {
-		deleteValidEntitiesLocalDatabase();
-		instantiateEntitiesToTest();
-		insertInvalidEntitiesInLocalDatabase();
-		
-		Url caughtUrl = validUrlDao.getUrl();
-		
-		int result = caughtUrl.getIdUpdateUrl();
-		int expectedResult = 0;
-		
-		Assert.assertFalse( ( expectedResult == result ) );
-	}
-	
-	/* TODO: creating a issue about this. */
 	public void testGetUrlWithEmptyDatabase() {
 		deleteValidEntitiesLocalDatabase();
 		
@@ -143,7 +126,7 @@ public class UrlDaoTest extends AndroidTestCase {
 		int result = caughtUrl.getIdUpdateUrl();
 		int expectedResult = 0;
 		
-		Assert.assertFalse( ( expectedResult == result ) );
+		Assert.assertTrue( ( expectedResult == result ) );
 	}
 	
 	private void deleteValidEntitiesLocalDatabase() {
@@ -152,10 +135,6 @@ public class UrlDaoTest extends AndroidTestCase {
 	
 	private void insertValidEntitiesInLocalDatabase() {
 		validUrlDao.insertUrl( validUrl );
-	}
-	
-	private void insertInvalidEntitiesInLocalDatabase() {
-		validUrlDao.insertUrl( invalidUrl );
 	}
 	
 	private void instantiateEntitiesToTest() {
