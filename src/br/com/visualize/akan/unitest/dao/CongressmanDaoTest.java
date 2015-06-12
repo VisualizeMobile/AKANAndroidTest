@@ -10,6 +10,7 @@ import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
 import br.com.visualize.akan.api.dao.CongressmanDao;
+import br.com.visualize.akan.domain.enumeration.Order;
 import br.com.visualize.akan.domain.exception.DatabaseInvalidOperationException;
 import br.com.visualize.akan.domain.exception.NullCongressmanException;
 import br.com.visualize.akan.domain.model.Congressman;
@@ -65,6 +66,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	public void testInsertAllValidCongressman() {
+		deleteValidEntitiesLocalDatabase();
 		List<Congressman> congressmanList = new ArrayList<Congressman>();
 		
 		congressmanList.add( validCongressmanA );
@@ -82,6 +84,8 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	}
 	
 	public void testInsertAllNullCongressman() {
+		deleteValidEntitiesLocalDatabase();
+		
 		List<Congressman> congressmanList = new ArrayList<Congressman>();
 		
 		congressmanList.add( nullCongressman );
@@ -180,7 +184,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	
 	public void testListAllCongressmen() {
 		List<Congressman> result = new ArrayList<Congressman>();
-		result = validCongressmanDao.getAll();
+		result = validCongressmanDao.getAll(Order.RANKING);
 		
 		List<Congressman> expectedResult = new ArrayList<Congressman>();
 		
@@ -191,7 +195,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 		deleteValidEntitiesLocalDatabase();
 		
 		List<Congressman> result = new ArrayList<Congressman>();
-		result = validCongressmanDao.getAll();
+		result = validCongressmanDao.getAll(Order.RANKING);
 		
 		List<Congressman> expectedResult = new ArrayList<Congressman>();
 		
@@ -200,7 +204,7 @@ public class CongressmanDaoTest extends AndroidTestCase {
 	
 	public void testListAllCongressmenWithoutForgettingAnyone() {
 		List<Congressman> congressmanList = new ArrayList<Congressman>();
-		congressmanList = validCongressmanDao.getAll();
+		congressmanList = validCongressmanDao.getAll(Order.RANKING);
 		
 		int expectedResult = 3;
 		int result = congressmanList.size();

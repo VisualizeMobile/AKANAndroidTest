@@ -65,6 +65,7 @@ public class QuotaDaoTest extends AndroidTestCase {
 	
 	public void testLocalDatabaseIsEmpty() {
 		deleteValidEntitiesLocalDatabase();
+		deleteValidEntitiesLocalDatabase();
 		
 		boolean result = validQuotaDao.checkEmptyLocalDb();
 		
@@ -327,7 +328,7 @@ public class QuotaDaoTest extends AndroidTestCase {
      }
 	
 	private boolean compareList( List<?> firstList, List<?> secondList ) {
-		ArrayList<?> comparedList = new ArrayList<>( firstList );
+		ArrayList<?> comparedList = (ArrayList<?>) firstList;
 		
 		for( Object element : secondList ) {
 			if( !comparedList.remove( element ) ) {
