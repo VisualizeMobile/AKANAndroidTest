@@ -11,7 +11,6 @@ import android.widget.Button;
 public class CongressmanListTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {
 
-	// TODO: O que esse Solo faz?
 	private Solo solo;
 
 	@SuppressWarnings("deprecation")
@@ -22,23 +21,6 @@ public class CongressmanListTest extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		solo = new Solo(getInstrumentation(), getActivity());
-	}
-
-	public void testSelectCongressman() {
-		solo.assertCurrentActivity("Verifica se está na primeira activity.",
-				ListScreen.class);
-		solo.clickOnText("CARLOS MELLES"); // TODO: Generalizar
-		solo.assertCurrentActivity(
-				"Verifica se está na activity de descrição do parlamentar.",
-				DescriptionScreen.class);
-		solo.scrollDown();
-		solo.sleep(2000);
-		solo.scrollUp();
-		solo.sleep(3000);
-		solo.goBack();
-		solo.assertCurrentActivity(
-				"Verifica se voltou para a primeira activity", ListScreen.class);
-		solo.sleep(2000);
 	}
 
 	public void testFollowCongressman() {
