@@ -1,4 +1,4 @@
-package br.com.visualize.akan.test;
+package br.com.visualize.akan.functional;
 
 import com.robotium.solo.Solo;
 
@@ -8,14 +8,14 @@ import br.com.visualize.akan.domain.view.ListScreen;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 
-public class ClickCongressmanTest extends
+public class CongressmanListTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {
 
 	// TODO: O que esse Solo faz?
 	private Solo solo;
 
 	@SuppressWarnings("deprecation")
-	public ClickCongressmanTest() {
+	public CongressmanListTest() {
 		super("br.com.visualize.akan", ListScreen.class);
 	}
 
@@ -27,7 +27,7 @@ public class ClickCongressmanTest extends
 	public void testSelectCongressman() {
 		solo.assertCurrentActivity("Verifica se está na primeira activity.",
 				ListScreen.class);
-		solo.clickOnText("NILTON CAPIXABA"); // TODO: Generalizar
+		solo.clickOnText("CARLOS MELLES"); // TODO: Generalizar
 		solo.assertCurrentActivity(
 				"Verifica se está na activity de descrição do parlamentar.",
 				DescriptionScreen.class);
@@ -51,7 +51,7 @@ public class ClickCongressmanTest extends
 		Button followCongressman = (Button) solo.getView("list_btn_follow");
 		solo.clickOnView(followCongressman);
 		assertTrue(solo.waitForDialogToOpen(2000));
-		assertTrue(solo.waitForText("Parlamentar MARCOS ROGÉRIO seguido", 1,
+		assertTrue(solo.waitForText("Parlamentar MARCELO AGUIAR seguido", 1,
 				3000));
 		solo.sleep(2000);
 	}
