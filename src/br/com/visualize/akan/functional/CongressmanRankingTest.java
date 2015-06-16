@@ -28,13 +28,13 @@ public class CongressmanRankingTest extends
 		solo.assertCurrentActivity("Verifica se está na primeira activity.",
 				ListScreen.class);
 		Button rankingButton = (Button) solo.getView("btn_ranking");
-		// TextView ranking_position = (TextView)
-		// solo.getView("ranking_layout_position");
-		// TextView valueSpend = (TextView)
-		// solo.getView("ranking_layout_txt_value");
 		solo.clickOnView(rankingButton);
-		assertTrue(solo.waitForText("21", 1, 3000));
-		//assertTrue(solo.waitForText(Pattern.quote("R$ 173.694,17"), 1, 3000));
+		TextView ranking_position = (TextView) solo
+				.getView("ranking_layout_position");
+		TextView valueSpend = (TextView) solo
+				.getView("ranking_layout_txt_value");
+		assertEquals("R$ 173.694,17", valueSpend.getText().toString());
+		assertEquals("21", ranking_position.getText().toString());
 		solo.sleep(3000);
 
 	}
