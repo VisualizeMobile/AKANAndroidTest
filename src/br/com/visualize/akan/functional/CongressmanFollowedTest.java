@@ -28,28 +28,28 @@ public class CongressmanFollowedTest extends
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-//	public void testFollwedList() {
-//		solo.clickOnText("FELIPE MAIA");
-//		Button followCongressmanOnDescription = (Button) solo
-//				.getView("description_btn_follow");
-//		solo.clickOnView(followCongressmanOnDescription);
-//		solo.sleep(2000);
-//		solo.goBack();
-//
-//		Button listOfFollowedCongressman = (Button) solo.getView("btn_follow");
-//		solo.clickOnView(listOfFollowedCongressman);
-//		assertTrue(solo.searchText("FELIPE MAIA"));
-//
-//		solo.sleep(2000);
-//
-//		Button followCongressmanOnList = (Button) solo
-//				.getView("list_btn_follow");
-//		solo.clickOnView(followCongressmanOnList);
-//		solo.sleep(1000);
-//
-//		solo.clickOnView(listOfFollowedCongressman);
-//		solo.sleep(1000);
-//	}
+	public void testFollwedList() {
+		solo.clickOnText("FELIPE MAIA");
+		Button followCongressmanOnDescription = (Button) solo
+				.getView("description_btn_follow");
+		solo.clickOnView(followCongressmanOnDescription);
+		solo.sleep(2000);
+		solo.goBack();
+
+		Button listOfFollowedCongressman = (Button) solo.getView("btn_follow");
+		solo.clickOnView(listOfFollowedCongressman);
+		assertTrue(solo.searchText("FELIPE MAIA"));
+
+		solo.sleep(2000);
+
+		Button followCongressmanOnList = (Button) solo
+				.getView("list_btn_follow");
+		solo.clickOnView(followCongressmanOnList);
+		solo.sleep(1000);
+
+		solo.clickOnView(listOfFollowedCongressman);
+		solo.sleep(1000);
+	}
 
 	public void testRankingInFollwedList() {
 		solo.clickOnText("MENDONÇA FILHO");

@@ -52,6 +52,7 @@ public class CongressmanDescriptionTest extends
 		assertTrue(solo.waitForDialogToOpen(2000));
 		assertTrue(solo.waitForText("Parlamentar MARCOS ROGÉRIO seguido"));
 		solo.sleep(2000);
+		solo.clickOnView(followCongressman);
 	}
 
 	public void testSelectReferenceMonth() {
