@@ -36,5 +36,6 @@ public class CongressmanListTest extends
 		assertTrue(solo.waitForText("Parlamentar MARCELO AGUIAR seguido", 1,
 				3000));
 		solo.sleep(2000);
+		solo.clickOnView(followCongressman);
 	}
 }
