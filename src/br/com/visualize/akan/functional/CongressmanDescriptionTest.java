@@ -6,14 +6,15 @@ import br.com.visualize.akan.R;
 import br.com.visualize.akan.domain.view.DescriptionScreen;
 import br.com.visualize.akan.domain.view.ListScreen;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class CongressmanDescriptionTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {
 
 	private Solo solo;
-
 	@SuppressWarnings("deprecation")
 	public CongressmanDescriptionTest() {
 		super("br.com.visualize.akan", ListScreen.class);
@@ -23,12 +24,21 @@ public class CongressmanDescriptionTest extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		solo = new Solo(getInstrumentation(), getActivity());
+	   
+	    
+
 	}
 
 	public void testSelectCongressman() {
 		solo.assertCurrentActivity("Verifica se está na primeira activity.",
 				ListScreen.class);
-		solo.clickOnText("MARCOS ROGÉRIO"); // TODO: Generalizar
+		
+		ListView myList = (ListView) solo.getView(R.id.listView);
+
+		View congressman = myList.getChildAt(2);
+		TextView congressmanName = (TextView) (congressman
+				.findViewById(R.id.ranking_layout_txt_congressman_name));
+		solo.clickOnView(congressman);
 		solo.assertCurrentActivity(
 				"Verifica se está na activity de descrição do parlamentar.",
 				DescriptionScreen.class);
@@ -42,7 +52,12 @@ public class CongressmanDescriptionTest extends
 	public void testFollowCongressmanInDescriptionScreen() {
 		solo.assertCurrentActivity("Verifica se está na primeira activity.",
 				ListScreen.class);
-		solo.clickOnText("MARCOS ROGÉRIO");
+		ListView myList = (ListView) solo.getView(R.id.listView);
+
+		View congressman = myList.getChildAt(4);
+		TextView congressmanName = (TextView) (congressman
+				.findViewById(R.id.ranking_layout_txt_congressman_name));
+		solo.clickOnView(congressman);
 		solo.assertCurrentActivity(
 				"Verifica se está na activity de descrição do parlamentar.",
 				DescriptionScreen.class);
@@ -50,7 +65,7 @@ public class CongressmanDescriptionTest extends
 				.getView("description_btn_follow");
 		solo.clickOnView(followCongressman);
 		assertTrue(solo.waitForDialogToOpen(2000));
-		assertTrue(solo.waitForText("Parlamentar MARCOS ROGÉRIO seguido"));
+		assertTrue(solo.waitForText("Parlamentar "+congressmanName.getText().toString()+ " seguido"));
 		solo.sleep(2000);
 		solo.clickOnView(followCongressman);
 	}
@@ -58,7 +73,10 @@ public class CongressmanDescriptionTest extends
 	public void testSelectReferenceMonth() {
 		solo.assertCurrentActivity("Verifica se está na primeira activity.",
 				ListScreen.class);
-		solo.clickOnText("MARCOS ROGÉRIO");
+		ListView myList = (ListView) solo.getView(R.id.listView);
+
+		View congressman = myList.getChildAt(1);
+		solo.clickOnView(congressman);
 		solo.assertCurrentActivity(
 				"Verifica se está na activity de descrição do parlamentar.",
 				DescriptionScreen.class);
