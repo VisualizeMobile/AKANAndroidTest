@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import br.com.visualize.akan.R;
 import br.com.visualize.akan.domain.view.DescriptionScreen;
 import br.com.visualize.akan.domain.view.ListScreen;
 
