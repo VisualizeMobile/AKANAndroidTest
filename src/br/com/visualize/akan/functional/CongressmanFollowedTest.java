@@ -1,9 +1,5 @@
 package br.com.visualize.akan.functional;
 
-import java.util.regex.Pattern;
-
-import com.robotium.solo.Solo;
-
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +7,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import br.com.visualize.akan.R;
 import br.com.visualize.akan.domain.view.ListScreen;
+
+import com.robotium.solo.Solo;
 
 public class CongressmanFollowedTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {

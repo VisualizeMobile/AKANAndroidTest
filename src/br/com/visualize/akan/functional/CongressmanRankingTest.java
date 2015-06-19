@@ -1,13 +1,11 @@
 package br.com.visualize.akan.functional;
 
-import java.util.regex.Pattern;
-
-import com.robotium.solo.Solo;
-
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.TextView;
 import br.com.visualize.akan.domain.view.ListScreen;
+
+import com.robotium.solo.Solo;
 
 public class CongressmanRankingTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {
