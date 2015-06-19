@@ -1,10 +1,12 @@
 package br.com.visualize.akan.functional;
 
+import com.robotium.solo.Solo;
+
+import br.com.visualize.akan.R;
+import br.com.visualize.akan.domain.view.DescriptionScreen;
+import br.com.visualize.akan.domain.view.ListScreen;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import br.com.visualize.akan.domain.view.ListScreen;
-
-import com.robotium.solo.Solo;
 
 public class CongressmanListTest extends
 		ActivityInstrumentationTestCase2<ListScreen> {
@@ -30,7 +32,7 @@ public class CongressmanListTest extends
 		solo.sleep(5);
 		Button followCongressman = (Button) solo.getView("list_btn_follow");
 		solo.clickOnView(followCongressman);
-		//assertTrue(solo.waitForDialogToOpen(2000));
+		// assertTrue(solo.waitForDialogToOpen(2000));
 		assertTrue(solo.waitForText("Parlamentar MARCELO AGUIAR seguido", 1,
 				3000));
 		solo.sleep(2000);

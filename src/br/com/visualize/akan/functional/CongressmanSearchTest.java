@@ -29,7 +29,7 @@ public class CongressmanSearchTest extends
 		assertTrue(solo.waitForText("TIRIRICA"));
 		solo.sleep(3000);
 	}
-	
+
 	public void testMatchSecondName() {
 		Button searchButton = (Button) solo.getView("btn_search");
 		solo.clickOnView(searchButton);
@@ -37,17 +37,5 @@ public class CongressmanSearchTest extends
 		assertTrue(solo.waitForText("JÚLIO CAMPOS"));
 		solo.sleep(3000);
 	}
-	
 
 }
-
-
-
-
-
-
-
-
-
-
-
