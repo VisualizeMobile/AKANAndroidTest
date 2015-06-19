@@ -32,10 +32,11 @@ public class CongressmanListTest extends
 		solo.sleep(5);
 		Button followCongressman = (Button) solo.getView("list_btn_follow");
 		solo.clickOnView(followCongressman);
-		assertTrue(solo.waitForDialogToOpen(2000));
+		//assertTrue(solo.waitForDialogToOpen(2000));
 		assertTrue(solo.waitForText("Parlamentar MARCELO AGUIAR seguido", 1,
 				3000));
 		solo.sleep(2000);
-		solo.clickOnView(followCongressman);
+		Button UnfollowCongressman = (Button) solo.getView("list_btn_follow");
+		solo.clickOnView(UnfollowCongressman);
 	}
 }

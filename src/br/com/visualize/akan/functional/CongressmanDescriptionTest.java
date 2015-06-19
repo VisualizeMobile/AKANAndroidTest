@@ -64,7 +64,7 @@ public class CongressmanDescriptionTest extends
 		Button followCongressman = (Button) solo
 				.getView("description_btn_follow");
 		solo.clickOnView(followCongressman);
-		assertTrue(solo.waitForDialogToOpen(2000));
+		//assertTrue(solo.waitForDialogToOpen(2000));
 		assertTrue(solo.waitForText("Parlamentar "+congressmanName.getText().toString()+ " seguido"));
 		solo.sleep(2000);
 		solo.clickOnView(followCongressman);
