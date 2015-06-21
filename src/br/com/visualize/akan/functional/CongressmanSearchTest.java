@@ -31,11 +31,12 @@ public class CongressmanSearchTest extends
 	}
 
 	public void testMatchSecondName() {
-		Button searchButton = (Button) solo.getView("btn_search");
-		solo.clickOnView(searchButton);
+		Button search2Button = (Button) solo.getView("btn_search");
+		solo.clickOnView(search2Button);
 		solo.enterText(0, "campos");
 		assertTrue(solo.waitForText("JÚLIO CAMPOS"));
 		solo.sleep(3000);
+		solo.goBack();
 	}
 
 }
