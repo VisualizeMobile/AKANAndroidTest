@@ -1,7 +1,7 @@
 # Authors
 The lists are in alphabetical order.
 
-## Regular Team
+## Core Team
 * [Arthur Jahn][arthur_jahn]
 * [Maxwell Almeida][maxwell_almeida]
 * [Thaiane Braga][thaiane_braga]
